@@ -6,8 +6,8 @@ import (
 	"os/user"
 	"path/filepath"
 
-	"github.com/ysbrothersk/spoitgo"
 	"github.com/ysbrothersk/spoitgo/logo"
+	"github.com/ysbrothersk/spoitgo/spoitgo"
 )
 
 func main() {
