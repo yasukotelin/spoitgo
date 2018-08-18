@@ -2,23 +2,47 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os/user"
+	"path/filepath"
 
 	"github.com/ysbrothersk/spoitgo"
 	"github.com/ysbrothersk/spoitgo/logo"
 )
 
-const spotLightDir = "C:\\Users\\yasu\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
-
 func main() {
 	logo.Print()
 
-	fileNames, err := spoitgo.ReadOnlyHdImagePaths()
+	u, err := user.Current()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	saveDir := filepath.Join(u.HomeDir, "Pictures", "SpoitGo")
+
+	newCount, err := spoitgo.CloneSpotlightImage(saveDir)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	for _, v := range fileNames {
-		fmt.Println(v)
+	fmt.Println()
+	fmt.Println("New File:", newCount)
+
+	total, err := getTotalCount(saveDir)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
+	fmt.Println("Total:", total)
+}
+
+// getTotalCount ディレクトリ内ファイルの総数を返却します
+func getTotalCount(dir string) (int, error) {
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return 0, err
+	}
+
+	return len(files), nil
 }
