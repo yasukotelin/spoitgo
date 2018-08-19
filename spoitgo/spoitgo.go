@@ -2,7 +2,9 @@ package spoitgo
 
 import (
 	"image"
+	// JPEGを読み込めるようにインポート
 	_ "image/jpeg"
+	// PNGを読み込めるようにインポート
 	_ "image/png"
 	"io"
 	"os/user"
