@@ -126,7 +126,8 @@ func filterOnlyHdImage(filePaths []ImagePath) ([]ImagePath, error) {
 
 		config, _, err := image.DecodeConfig(f)
 		if err != nil {
-			return nil, err
+			// 画像ファイルでない場合はcontinueする
+			continue
 		}
 
 		if config.Width >= hdImageW && config.Height >= hdImageH {
