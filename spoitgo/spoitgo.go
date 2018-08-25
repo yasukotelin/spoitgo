@@ -2,7 +2,9 @@ package spoitgo
 
 import (
 	"image"
+	// JPEGを読み込めるようにインポート
 	_ "image/jpeg"
+	// PNGを読み込めるようにインポート
 	_ "image/png"
 	"io"
 	"os/user"
@@ -124,7 +126,8 @@ func filterOnlyHdImage(filePaths []ImagePath) ([]ImagePath, error) {
 
 		config, _, err := image.DecodeConfig(f)
 		if err != nil {
-			return nil, err
+			// 画像ファイルでない場合はcontinueする
+			continue
 		}
 
 		if config.Width >= hdImageW && config.Height >= hdImageH {
